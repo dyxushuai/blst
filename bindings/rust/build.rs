@@ -216,6 +216,11 @@ fn main() {
     if target_env.eq("msvc") && cc.get_compiler().is_like_msvc() {
         cc.flag("-Zl");
     }
+    if target_os.eq("zkvm") {
+        // for sp1's alignment
+        cc.flag("-mstrict-align");
+        cc.flag("-falign-functions=2");
+    }
     cc.flag_if_supported("-mno-avx") // avoid costly transitions
         .flag_if_supported("-fno-builtin")
         .flag_if_supported("-Wno-unused-function")
